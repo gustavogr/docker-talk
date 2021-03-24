@@ -1,0 +1,43 @@
+version: "3.8"
+services:
+  api-core:
+    image: myuser/myimage:latest
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_HOST: database
+      MY_SECRET_KEY: $MY_SECRET_KEY
+      EXTERNAL_SERVICE: $EXTERNAL_SERVICE
+
+  database:
+    container_name: database
+    image: postgres:12.2-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "test"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "8123:80"
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "user@example.com"
+      PGADMIN_DEFAULT_PASSWORD: "password"
+
+  migrations:
+    image: myuser/myimage:latest
+    command: yarn migrations
+    depends_on:
+      - database
+    environment:
+      DATABASE_HOST: database
+      DATABASE_USERNAME: user
+      DATABASE_PASSWORD: password
+      DATABASE_DATABASE: test
