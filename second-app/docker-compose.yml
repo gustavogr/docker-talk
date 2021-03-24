@@ -1,0 +1,14 @@
+services:
+  api:
+    image: gustavotango/simple-express-2
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    environment:
+      EXTERNAL_URI: "http://external:8080"
+
+  external:
+    image: jmalloc/echo-server
+    ports:
+      - "8080:8080"
