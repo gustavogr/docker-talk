@@ -1,6 +1,5 @@
 services:
   api:
-    image: gustavotango/simple-express-2
     build:
       context: .
     ports:
