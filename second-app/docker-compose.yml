@@ -7,6 +7,8 @@ services:
       - "3000:3000"
     environment:
       EXTERNAL_URI: "http://external:8080"
+    # volumes:
+    #   - "./src:/app/src"
 
   external:
     image: jmalloc/echo-server
