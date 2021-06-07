@@ -7,9 +7,7 @@ RUN yarn install --frozen-lockfile
 
 COPY . .
 
-RUN yarn generate:models
 RUN yarn build
-
 RUN yarn install --frozen-lockfile --production
 
 
